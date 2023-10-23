@@ -85,93 +85,89 @@ open class ContainerController: NSObject {
         return ContainerDevice.isPortrait
     }
     
-    private var deviceHeight: CGFloat {
+    open var deviceHeight: CGFloat {
         var height: CGFloat = 0.0
-//        if isPortrait {
-//            height = ContainerDevice.screenMax
-//        } else {
-//            height = ContainerDevice.screenMin
-//        }
-        height = ContainerDevice.screenMax
+        if isPortrait {
+            height = ContainerDevice.screenMax
+        } else {
+            height = ContainerDevice.screenMin
+        }
         height -= topBarHeight
         return height
     }
     
     private var deviceWidth: CGFloat {
         var width: CGFloat = 0.0
-//        if isPortrait {
-//            width = ContainerDevice.screenMin
-//        } else {
-//            width = ContainerDevice.screenMax
-//        }
-        width = ContainerDevice.screenMin
+        if isPortrait {
+            width = ContainerDevice.screenMin
+        } else {
+            width = ContainerDevice.screenMax
+        }
         return width
     }
     
     // MARK: - Positions Move
     
-    public var positionTop: CGFloat {
+    open var positionTop: CGFloat {
         var top = layout.positions.top
-//        if !isPortrait {
-//            if let landscape = layout.landscapePositions {
-//                top = landscape.top
-//            }
-//        }
+        if !isPortrait {
+            if let landscape = layout.landscapePositions {
+                top = landscape.top
+            }
+        }
         return top
     }
     
-    public var positionMiddle: CGFloat {
+    open var positionMiddle: CGFloat {
         var middle = layout.positions.middle ?? layout.positions.bottom
-//        if !isPortrait {
-//            if let landscapeMid = layout.landscapePositions?.middle {
-//                middle = landscapeMid
-//            }
-//        }
+        if !isPortrait {
+            if let landscapeMid = layout.landscapePositions?.middle {
+                middle = landscapeMid
+            }
+        }
         return deviceHeight - middle
     }
     
-    public var positionBottom: CGFloat {
+   open var positionBottom: CGFloat {
         var bottom = layout.positions.bottom
-//        if !isPortrait {
-//            if let landscape = layout.landscapePositions {
-//                bottom = landscape.bottom
-//            }
-//        }
+        if !isPortrait {
+            if let landscape = layout.landscapePositions {
+                bottom = landscape.bottom
+            }
+        }
         return deviceHeight - bottom
     }
     
     private var insetsLeft: CGFloat {
         var left: CGFloat = layout.insets.left
-//        if !isPortrait {
-//            if let inset = layout.landscapeInsets {
-//                left = inset.left
-//            }
-//        }
+        if !isPortrait {
+            if let inset = layout.landscapeInsets {
+                left = inset.left
+            }
+        }
         return left
     }
     
     private var insetsRight: CGFloat {
         var right: CGFloat = layout.insets.right
-//        if !isPortrait {
-//            if let inset = layout.landscapeInsets {
-//                right = inset.right
-//            }
-//        }
+        if !isPortrait {
+            if let inset = layout.landscapeInsets {
+                right = inset.right
+            }
+        }
         return right
     }
     
-    private var middleEnable: Bool {
-//        if isPortrait {
-//            return layout.positions.middle != nil
-//        } else {
-//            if let landscapePositions = layout.landscapePositions {
-//                return landscapePositions.middle != nil
-//            } else {
-//                return layout.positions.middle != nil
-//            }
-        return layout.positions.middle != nil
-//        }
-
+    open var middleEnable: Bool {
+        if isPortrait {
+            return layout.positions.middle != nil
+        } else {
+            if let landscapePositions = layout.landscapePositions {
+                return landscapePositions.middle != nil
+            } else {
+                return layout.positions.middle != nil
+            }
+        }
     }
     
     // MARK: - Init
@@ -182,7 +178,7 @@ open class ContainerController: NSObject {
         self.controller = controller
         set(layout: layout)
         
-//        NotificationCenter.default.addObserver(self, selector: #selector(rotated), name: UIDevice.orientationDidChangeNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(rotated), name: UIDevice.orientationDidChangeNotification, object: nil)
         
         createShadowButton()
         createContainerView()
@@ -452,11 +448,6 @@ open class ContainerController: NSObject {
         }
         
         view.contentView?.addSubview(scrollView)
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         calculationViews()
     }
     
@@ -756,7 +747,7 @@ open class ContainerController: NSObject {
     
     // MARK: - Move Position
     
-    public func positionMoveFrom(type: ContainerMoveType) -> CGFloat {
+    open func positionMoveFrom(type: ContainerMoveType) -> CGFloat {
         
         switch type {
         case .top: return positionTop
