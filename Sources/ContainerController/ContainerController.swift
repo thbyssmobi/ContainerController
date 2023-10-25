@@ -33,6 +33,7 @@ open class ContainerController: NSObject {
     
     public var delegate: ContainerControllerDelegate?
     
+    open var callBack: (() -> Void)?
     // MARK: Current Move Type
     
     public var moveType: ContainerMoveType = .hide
@@ -49,7 +50,7 @@ open class ContainerController: NSObject {
     
     private var panBeginSavePosition: CGFloat = 0.0
     
-    private var oldOrientation: ContainerDevice.Orientation = ContainerDevice.orientation
+    open var oldOrientation: ContainerDevice.Orientation = ContainerDevice.orientation
     
     private var isScrolling: Bool = false
     
@@ -96,7 +97,7 @@ open class ContainerController: NSObject {
         return height
     }
     
-    private var deviceWidth: CGFloat {
+    open var deviceWidth: CGFloat {
         var width: CGFloat = 0.0
         if isPortrait {
             width = ContainerDevice.screenMin
@@ -138,7 +139,7 @@ open class ContainerController: NSObject {
         return deviceHeight - bottom
     }
     
-    private var insetsLeft: CGFloat {
+    open var insetsLeft: CGFloat {
         var left: CGFloat = layout.insets.left
         if !isPortrait {
             if let inset = layout.landscapeInsets {
@@ -209,7 +210,7 @@ open class ContainerController: NSObject {
     
     // MARK: - Rotated
     
-    @objc func rotated() {
+    @objc open func rotated() {
         
         if !UIDevice.current.orientation.isRotateAllowed { return }
         
@@ -228,7 +229,7 @@ open class ContainerController: NSObject {
     
     // MARK: - Update Layout
     
-    public func set(layout: ContainerLayout) {
+    open func set(layout: ContainerLayout) {
         self.layout = layout
         calculationViews()
     }
@@ -863,7 +864,7 @@ open class ContainerController: NSObject {
         
     }
     
-    func shadowHiddenCheck() {
+    open func shadowHiddenCheck() {
         
         if isPortrait {
             shadowButton.isHidden = !layout.backgroundShadowShow
