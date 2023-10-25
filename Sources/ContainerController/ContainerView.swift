@@ -49,6 +49,17 @@ open class ContainerView: UIView {
         super.init(coder: coder)
     }
     
+    open func refreshContentView(frame: CGRect){
+        contentView?.removeFromSuperview()
+        contentView = UIView(frame: CGRect(x: 0, y: 0, width: frame.width, height: frame.height))
+        if let view = contentView {
+            view.backgroundColor = .clear
+            view.autoresizingMask = [.flexibleLeftMargin, .flexibleWidth, .flexibleRightMargin, .flexibleTopMargin, .flexibleHeight, .flexibleBottomMargin]
+            addSubview(view)
+            self.contentView = view
+        }
+    }
+    
     // MARK: Add Custom Shadow
     
     public func addShadow(opacity: CGFloat = 0.1) {
