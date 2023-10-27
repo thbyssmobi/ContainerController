@@ -586,9 +586,34 @@ open class ContainerController: NSObject {
         }
         
         scrollView.frame = CGRect(x: 0, y: headerHeight, width: width, height: height)
-        scrollView.scrollIndicatorInsets = UIEdgeInsets(top: indicatorTop , left: 0, bottom: indicatorBottom, right: 0)
-        scrollView.contentInset = UIEdgeInsets(top: top, left: 0, bottom: bottom, right: 0)
+//        scrollView.scrollIndicatorInsets = UIEdgeInsets(top: indicatorTop , left: 0, bottom: indicatorBottom, right: 0)
+        if isPortrait {
+            scrollView.contentInset = UIEdgeInsets(top: top, left: 0, bottom: bottom, right: 0)
+        } else {
+            scrollView.contentInset = UIEdgeInsets(top: top, left: 0, bottom: 330, right: 0)
+        }
     }
+    
+//}
+//if let superView = scrollView.superview{
+//    scrollView.translatesAutoresizingMaskIntoConstraints = false
+//    scrollView.topAnchor.constraint(equalTo: superView.topAnchor).isActive = true
+//    scrollView.bottomAnchor.constraint(equalTo: superView.bottomAnchor).isActive = true
+//    scrollView.leftAnchor.constraint(equalTo: superView.leftAnchor).isActive = true
+//    scrollView.rightAnchor.constraint(equalTo: superView.rightAnchor).isActive = true
+//    if isPortrait {
+//        scrollView.contentInset = UIEdgeInsets(top: 60, left: 0, bottom: 60, right: 0)
+//    } else {
+//        scrollView.contentInset = UIEdgeInsets(top: 60, left: 0, bottom: 30, right: 0)
+//    }
+////            scrollView.scrollIndicatorInsets = UIEdgeInsets(top: indicatorTop , left: 0, bottom: indicatorBottom, right: 0)
+//}
+//else{
+//    scrollView.frame = CGRect(x: 0, y: headerHeight, width: width, height: height)
+////            scrollView.scrollIndicatorInsets = UIEdgeInsets(top: indicatorTop , left: 0, bottom: indicatorBottom, right: 0)
+//    scrollView.contentInset = UIEdgeInsets(top: top, left: 0, bottom: bottom, right: 0)
+//}
+//}
     
     // MARK: - Position-Type From Velocity
     
