@@ -71,53 +71,54 @@ open class ContainerDevice {
     // MARK: - Orientation
     
     class public var isPortrait: Bool {
-        
-        var portrait: Bool = false
-        
-        let size: CGSize = UIScreen.main.bounds.size
-        if size.width / size.height > 1 {
-            portrait = false
-        } else {
-            portrait = true
+        var portrait: Bool = true
+        if UIDevice.current.userInterfaceIdiom == .pad {
+                   
+                    let size: CGSize = UIScreen.main.bounds.size
+                    if size.width / size.height > 1 {
+                        portrait = false
+                    } else {
+                        portrait = true
+                    }
+                    
+//                    switch UIDevice.current.orientation {
+//                    case .landscapeLeft, .landscapeRight:
+//                        portrait = false
+//                    case .portrait:
+//                        portrait = true
+//                    default: break
+//                    }
         }
-        
-        switch UIDevice.current.orientation {
-        case .landscapeLeft, .landscapeRight:
-            portrait = false
-        case .portrait:
-            portrait = true
-        default: break
-        }
-        
         return portrait
     }
     
     class var statusBarOrientation: UIInterfaceOrientation? {
         get {
-            guard let orientation = UIApplication.shared.windows.first?.windowScene?.interfaceOrientation else {
-                #if DEBUG
-                fatalError("Could not obtain UIInterfaceOrientation from a valid windowScene")
-                #else
-                return nil
-                #endif
-            }
-            return orientation
+//            guard let orientation = UIApplication.shared.windows.first?.windowScene?.interfaceOrientation else {
+//                #if DEBUG
+//                fatalError("Could not obtain UIInterfaceOrientation from a valid windowScene")
+//                #else
+//                return nil
+//                #endif
+//            }
+            return .portrait
         }
     }
     
     class public var orientation: ContainerDevice.Orientation {
-        if isPortrait {
+        
+//        if isPortrait {
             return .portrait
-        } else {
-            if let statusBarOrientation = statusBarOrientation {
-                if statusBarOrientation == .landscapeLeft {
-                    return .landscapeLeft
-                } else if statusBarOrientation == .landscapeRight {
-                    return .landscapeRight
-                }
-            }
-            return .landscapeLeft
-        }
+//        } else {
+//            if let statusBarOrientation = statusBarOrientation {
+//                if statusBarOrientation == .landscapeLeft {
+//                    return .landscapeLeft
+//                } else if statusBarOrientation == .landscapeRight {
+//                    return .landscapeRight
+//                }
+//            }
+//            return .landscapeLeft
+//        }
     }
 }
 
