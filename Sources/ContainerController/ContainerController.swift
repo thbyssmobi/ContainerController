@@ -179,7 +179,7 @@ open class ContainerController: NSObject {
         self.controller = controller
         set(layout: layout)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(rotated), name: UIDevice.orientationDidChangeNotification, object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(rotated), name: UIDevice.orientationDidChangeNotification, object: nil)
         
         createShadowButton()
         createContainerView()
@@ -212,19 +212,19 @@ open class ContainerController: NSObject {
     
     @objc open func rotated() {
         
-        if !UIDevice.current.orientation.isRotateAllowed { return }
-        
-        if ContainerDevice.orientation == oldOrientation { return }
-        oldOrientation = ContainerDevice.orientation
-        
-        shadowHiddenCheck()
-        
-        delegate?.containerControllerRotation(self)
-        
-        calculationView()
-        calculationScrollViewHeight(from: .rotation)
-        
-        move(type: moveType, from: .rotation)
+//        if !UIDevice.current.orientation.isRotateAllowed { return }
+//        
+//        if ContainerDevice.orientation == oldOrientation { return }
+//        oldOrientation = ContainerDevice.orientation
+//        
+//        shadowHiddenCheck()
+//        
+//        delegate?.containerControllerRotation(self)
+//        
+//        calculationView()
+//        calculationScrollViewHeight(from: .rotation)
+//        
+//        move(type: moveType, from: .rotation)
     }
     
     // MARK: - Update Layout
