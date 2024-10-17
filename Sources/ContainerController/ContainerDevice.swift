@@ -71,25 +71,7 @@ open class ContainerDevice {
     // MARK: - Orientation
     
     class public var isPortrait: Bool {
-        
-        var portrait: Bool = false
-        
-        let size: CGSize = UIScreen.main.bounds.size
-        if size.width / size.height > 1 {
-            portrait = false
-        } else {
-            portrait = true
-        }
-        
-        switch UIDevice.current.orientation {
-        case .landscapeLeft, .landscapeRight:
-            portrait = false
-        case .portrait:
-            portrait = true
-        default: break
-        }
-        
-        return portrait
+        return true
     }
     
     class var statusBarOrientation: UIInterfaceOrientation? {
