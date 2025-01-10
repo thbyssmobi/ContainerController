@@ -127,6 +127,16 @@ open class ContainerController: NSObject {
         }
         return deviceHeight - middle
     }
+
+    public var positionCustom: CGFloat {
+        var custom = layout.positions.custom ?? layout.positions.bottom
+        if !isPortrait {
+            if let landscape = layout.landscapePositions {
+                custom = landscape.custom ?? 0.0
+            }
+        }
+        return deviceHeight - custom
+    }
     
     public var positionBottom: CGFloat {
         var bottom = layout.positions.bottom
@@ -784,7 +794,7 @@ open class ContainerController: NSObject {
             else { return positionMiddle }
         case .bottom: return positionBottom
         case .hide: return deviceHeight
-        case .custom: return 0.0
+        case .custom: return positionCustom
         }
     }
     
