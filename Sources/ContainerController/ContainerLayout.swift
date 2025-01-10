@@ -20,10 +20,13 @@ open class ContainerPosition {
     
     static let zero = ContainerPosition(top: 0, bottom: 0)
     
-    public init(top: CGFloat, middle: CGFloat? = nil, bottom: CGFloat) {
+    public var custom: CGFloat?
+    
+    public init(top: CGFloat, middle: CGFloat? = nil, bottom: CGFloat, custom: CGFloat? = nil) {
         self.top = top
         self.middle = middle
         self.bottom = bottom
+        self.custom = custom
     }
 }
 
