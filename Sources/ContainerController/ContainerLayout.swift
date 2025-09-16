@@ -12,7 +12,7 @@ import UIKit
 
 open class ContainerPosition {
     
-    public var top: CGFloat
+    public var top: CGFloat?
     
     public var middle: CGFloat?
     
@@ -22,7 +22,7 @@ open class ContainerPosition {
     
     public var custom: CGFloat?
     
-    public init(top: CGFloat, middle: CGFloat? = nil, bottom: CGFloat, custom: CGFloat? = nil) {
+    public init(top: CGFloat? = nil, middle: CGFloat? = nil, bottom: CGFloat, custom: CGFloat? = nil) {
         self.top = top
         self.middle = middle
         self.bottom = bottom
