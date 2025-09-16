@@ -68,13 +68,25 @@ open class ContainerView: UIView {
     public func addBlur(style: UIBlurEffect.Style) {
         
         if visualEffectView == nil {
-            let blurView = UIVisualEffectView(effect: UIBlurEffect(style: style))
-            self.insertSubview(blurView, at: 0)
-            visualEffectView = blurView
+            if #available(iOS 26.0, *) {
+                let glassEffect = UIGlassEffect(style: .regular)
+
+                let blurView = UIVisualEffectView(effect: glassEffect)
+                self.insertSubview(blurView, at: 0)
+                visualEffectView = blurView
+            } else {
+                let blurView = UIVisualEffectView(effect: UIBlurEffect(style: style))
+                self.insertSubview(blurView, at: 0)
+                visualEffectView = blurView
+            }
         }
         
         guard let visualEffectView = visualEffectView else { return }
-        visualEffectView.effect = UIBlurEffect(style: style)
+        if #available(iOS 26.0, *) {
+            visualEffectView.effect = UIGlassEffect(style: .regular)
+        } else {
+            visualEffectView.effect = UIBlurEffect(style: style)
+        }
         visualEffectView.bounds = bounds
         visualEffectView.frame = CGRect(x: 0, y: 0, width: visualEffectView.frame.width, height: visualEffectView.frame.height)
         visualEffectView.layer.cornerRadius = radius()
