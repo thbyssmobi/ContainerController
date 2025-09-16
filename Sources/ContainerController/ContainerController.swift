@@ -109,13 +109,22 @@ open class ContainerController: NSObject {
     // MARK: - Positions Move
     
     public var positionTop: CGFloat {
-        var top = layout.positions.top
-        if !isPortrait {
-            if let landscape = layout.landscapePositions {
-                top = landscape.top
+        if let top = layout.positions.top {
+            if !isPortrait {
+                if let landscapeTop = layout.landscapePositions?.top {
+                    return landscapeTop
+                } else {
+                    return top
+                }
+            } else {
+                return top
             }
+        } else {
+            
+            let bottomPosition = layout.positions.bottom
+            
+            return deviceHeight - bottomPosition
         }
-        return top
     }
     
     public var positionMiddle: CGFloat {
