@@ -431,11 +431,18 @@ open class ContainerController: NSObject {
     // MARK: - Add ScrollView
     
     public func removeScrollView() {
-        if let scroll = self.scrollView {
-            scroll.removeFromSuperview()
+        DispatchQueue.main.async {
+            if let scroll = self.scrollView {
+                scroll.removeFromSuperview()
+            }
+            self.scrollView = nil
+            self.calculationViews()
+            if let scroll = self.scrollView {
+                scroll.removeFromSuperview()
+            }
+            self.scrollView = nil
+            self.calculationViews()
         }
-        scrollView = nil
-        calculationViews()
     }
     
     public func add(scrollView: UIScrollView) {
@@ -466,21 +473,22 @@ open class ContainerController: NSObject {
             collectionAdapterView.dataSource = self
         }
         
-        view.contentView?.addSubview(scrollView)
-//        scrollView.translatesAutoresizingMaskIntoConstraints = false
-//        scrollView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-//        scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-//        scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-//        scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        calculationViews()
-        
-        self.addRecognizerToScrollView(scrollView: scrollView)
+        DispatchQueue.main.async {
+            self.scrollView = scrollView
+            self.view.contentView?.addSubview(scrollView)
+            
+            self.calculationViews()
+            
+            self.addRecognizerToScrollView(scrollView: scrollView)
+        }
     }
     
     func addRecognizerToScrollView(scrollView: UIScrollView) {
         if let panGesture = panGesture {
             print("didScroll addRecognizer")
-            scrollView.addGestureRecognizer(panGesture)
+            DispatchQueue.main.async {
+                scrollView.addGestureRecognizer(panGesture)
+            }
         }
     }
     
@@ -556,25 +564,27 @@ open class ContainerController: NSObject {
     }
     
     private func calculationView() {
-        guard let view = view else { return }
-        
-        let x: CGFloat = insetsLeft
-        let width: CGFloat = (deviceWidth - insetsRight - insetsLeft)
-        
-        view.frame.origin.x = x
-        view.frame.size.width = width
-        view.frame.size.height = deviceHeight * 2
-        
-        if let headerView = headerView {
-            headerView.frame.origin.x = 0.0
-            headerView.frame.origin.y = 0.0
-            headerView.frame.size.width = width
-        }
-        
-        if let footerView = footerView {
-            footerView.frame.origin.x = x
-            footerView.frame.size.width = width
-            changeFooterView()
+        DispatchQueue.main.async {
+            guard let view = self.view else { return }
+            
+            let x: CGFloat = self.insetsLeft
+            let width: CGFloat = (self.deviceWidth - self.insetsRight - self.insetsLeft)
+            
+            view.frame.origin.x = x
+            view.frame.size.width = width
+            view.frame.size.height = self.deviceHeight * 2
+            
+            if let headerView = self.headerView {
+                headerView.frame.origin.x = 0.0
+                headerView.frame.origin.y = 0.0
+                headerView.frame.size.width = width
+            }
+            
+            if let footerView = self.footerView {
+                footerView.frame.origin.x = x
+                footerView.frame.size.width = width
+                self.changeFooterView()
+            }
         }
     }
     
